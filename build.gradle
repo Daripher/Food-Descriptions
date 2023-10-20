@@ -5,7 +5,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = '1.0'
+version = '1.1'
 group = 'daripher.fooddesc'
 archivesBaseName = 'FoodDescriptions-1.19.2'
 
