@@ -1,26 +1,26 @@
-modLoader="javafml"
-loaderVersion="[43,)"
-license="GNU GENERAL PUBLIC LICENSE"
+modLoader = "javafml"
+loaderVersion = "[43,)"
+license = "GNU GENERAL PUBLIC LICENSE"
 
 [[mods]]
-modId="fooddesc"
-version="${file.jarVersion}"
-displayName="Food Descriptions"
-authors="Daripher"
-description='''
+modId = "fooddesc"
+version = "${file.jarVersion}"
+displayName = "Food Descriptions"
+authors = "Daripher"
+description = '''
 Adds food effects list in the item tooltip.
 '''
 
 [[dependencies.fooddesc]]
-modId="forge"
-mandatory=true
-versionRange="[43,)"
-ordering="NONE"
-side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.fooddesc]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.19.2,1.20)"
-ordering="NONE"
-side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,1.20)"
+ordering = "NONE"
+side = "BOTH"
