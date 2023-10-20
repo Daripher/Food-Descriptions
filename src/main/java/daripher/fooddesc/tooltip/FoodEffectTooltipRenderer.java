@@ -97,6 +97,11 @@ public class FoodEffectTooltipRenderer implements ClientTooltipComponent {
     MobEffectInstance effect = pair.getFirst();
     float chance = pair.getSecond();
     MutableComponent description = Component.translatable(effect.getDescriptionId());
+    if (effect.getAmplifier() > 0) {
+      MutableComponent amplifier =
+          Component.translatable("potion.potency." + effect.getAmplifier());
+      description = Component.translatable("potion.withAmplifier", description, amplifier);
+    }
     String time = " (" + MobEffectUtil.formatDuration(effect, 1f) + ")";
     description.append(time);
     if (chance < 1f) {
