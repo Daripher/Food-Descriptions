@@ -1,16 +1,14 @@
 package daripher.fooddesc.tooltip;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Matrix4f;
+import org.joml.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -45,47 +43,43 @@ public class FoodEffectTooltipRenderer implements ClientTooltipComponent {
       @NotNull Font font,
       int x,
       int y,
-      @NotNull PoseStack poseStack,
-      @NotNull ItemRenderer itemRenderer,
-      int blitOffset) {
+      @NotNull GuiGraphics guigraphics) {
     Minecraft minecraft = Minecraft.getInstance();
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     for (int i = 0; i < component.effects().size(); i++) {
       MobEffectInstance effect = component.effects().get(i).getFirst();
-      renderEffectIcon(x, y + getSpacing() * i, poseStack, blitOffset, minecraft, effect);
+      renderEffectIcon(guigraphics, x, y + getSpacing() * i, minecraft, effect);
     }
   }
 
   private void renderEffectIcon(
+      GuiGraphics guiGraphics,
       int x,
       int y,
-      @NotNull PoseStack poseStack,
-      int blitOffset,
       Minecraft minecraft,
       MobEffectInstance effect) {
     TextureAtlasSprite sprite = minecraft.getMobEffectTextures().get(effect.getEffect());
-    ResourceLocation textureLocation = sprite.atlas().location();
+    ResourceLocation textureLocation = sprite.atlasLocation();
     RenderSystem.setShaderTexture(0, textureLocation);
-    GuiComponent.blit(poseStack, x, y, blitOffset, 9, 9, sprite);
+    guiGraphics.blit(x, y, 0, 9, 9, sprite);
   }
 
   @Override
   public void renderText(
-      @NotNull Font font, int x, int y, @NotNull Matrix4f matrix, @NotNull BufferSource buffer) {
+          @NotNull Font font, int x, int y, @NotNull Matrix4f matrix, @NotNull BufferSource buffer) {
     for (int i = 0; i < component.effects().size(); i++) {
       Component description = getEffectDescription(component.effects().get(i));
-      font.drawInBatch(
-          description,
-          x + 12,
-          y + 1 + getSpacing() * i,
-          0xAABBCC,
-          true,
-          matrix,
-          buffer,
-          false,
-          0,
-          15728880);
+      font.drawInBatch(description,
+              x + 12,
+              y + 1 + getSpacing() * i,
+              0xAABBCC,
+              true,
+              matrix,
+              buffer,
+              Font.DisplayMode.NORMAL,
+              0,
+              15728880);
     }
   }
 
@@ -102,7 +96,7 @@ public class FoodEffectTooltipRenderer implements ClientTooltipComponent {
           Component.translatable("potion.potency." + effect.getAmplifier());
       description = Component.translatable("potion.withAmplifier", description, amplifier);
     }
-    String time = " (" + MobEffectUtil.formatDuration(effect, 1f) + ")";
+    String time = " (" + MobEffectUtil.formatDuration(effect, 1f).getString() + ")";
     description.append(time);
     if (chance < 1f) {
       description.append(" (" + (int) (chance * 100) + "%)");

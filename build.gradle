@@ -7,13 +7,13 @@ plugins {
 
 version = '1.1'
 group = 'daripher.fooddesc'
-archivesBaseName = 'FoodDescriptions-1.19.2'
+archivesBaseName = 'FoodDescriptions-1.20.1'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'parchment', version: '2022.11.27-1.19.2'
+    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
 
     runs {
         client {
@@ -81,7 +81,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.2.20'
 }
 
 jar {
